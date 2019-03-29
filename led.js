@@ -1,9 +1,9 @@
 const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
 
-function Led(pin, gpiop = gpiop) {
+function Led(pin, _gpiop = gpiop) {
   this.pin = pin;
-  this.gpiop = gpiop;
+  this.gpiop = _gpiop;
   this.value = false;
 }
 
@@ -22,3 +22,5 @@ Led.prototype.isOn = function isOn() {
 Led.prototype.setValue = function setValue(newValue) {
   return this.gpiop.write(this.pin, newValue).then(() => this.setValue(true));
 };
+
+module.exports = Led;

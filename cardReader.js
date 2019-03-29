@@ -3,7 +3,7 @@ const SerialPort = require('serialport');
 const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
 const YELLOW_LED = 37;
-const Led = import('./led');
+const Led = require('./led');
 
 function cardReaderViaSerialPort(port = '/dev/ttyAMA0', cfg = { baudRate: 115200, pollInterval: 2000 }, portType = SerialPort) {
   const serialPort = new SerialPort(port, cfg);
