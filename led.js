@@ -31,4 +31,10 @@ Led.prototype.blink = function blink(time) {
   this.blinker = setInterval(() => this.setValue(!this.value), time);
 };
 
+Led.prototype.step = function step(duration) {
+  this.setValue(true);
+  setTimeout(() => this.off(), duration);
+};
+
+
 module.exports = Led;
