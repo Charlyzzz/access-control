@@ -20,13 +20,12 @@ function CardReader(nfcReader, timer, pollingInterval) {
 
 CardReader.prototype.onTag = function onTag(callback) {
   this._reader.on('ready', () => {
-
     let lastTagDetected = 0;
     let lastUID = null;
     this._reader.on('tag', ({ uid }) => {
       const now = this.now();
       const ellapsedTime = now - lastTagDetected;
-      if (uid !== lastUID || now - lastTagDetected > this.pollingInterval) {
+      if (uid !== lastUID || ellapsedTime > this.pollingInterval) {
         lastTagDetected = now;
         lastUID = uid;
         callback(uid);
@@ -36,7 +35,7 @@ CardReader.prototype.onTag = function onTag(callback) {
 };
 
 CardReader.prototype.startOperationalBeacon = function startOperationalBeacon() {
-  gpiop.setup(YELLOW_LED, gpio.DIR_OUT).then(() => {
+  gpiop.setup(37, gpio.DIR_OUT).then(() => {
     const yellow = new Led(37);
     yellow.blink(400);
   });
