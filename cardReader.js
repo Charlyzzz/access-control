@@ -1,6 +1,6 @@
 const PN532 = require('pn532').PN532;
 const SerialPort = require('serialport');
-const gpio = require('rpi-gpio')
+const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
 const PIN = 37;
 
@@ -14,29 +14,38 @@ function CardReader(nfcReader, timer, pollingInterval) {
   this._reader = nfcReader;
   this.now = timer;
   this.pollingInterval = pollingInterval;
+  this.startOperationalBeacon();
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
   this._reader.on('ready', () => {
-    gpiop.setup(PIN, gpio.DIR_OUT)
-      .then(() => {
-        return gpiop.write(PIN, true)
-      });
+
     let lastTagDetected = 0;
     let lastUID = null;
     this._reader.on('tag', ({ uid }) => {
       const now = this.now();
       const ellapsedTime = now - lastTagDetected;
-      console.log("ellapsed", ellapsedTime);
-      if (uid != lastUID || now - lastTagDetected > this.pollingInterval) {
+      console.log('ellapsed', ellapsedTime);
+      if (uid !== lastUID || now - lastTagDetected > this.pollingInterval) {
         lastTagDetected = now;
         lastUID = uid;
         callback(uid);
       }
     });
   });
-}
+};
 
-exports.CardReader = CardReader
-exports.cardReaderViaSerialPort = cardReaderViaSerialPort
+CardReader.prototype.startOperationalBeacon = function startOperationalBeacon() {
+  gpiop.setup(PIN, gpio.DIR_OUT)
+    .then(() => {
+      let ledValue = 1;
+      setInterval(() => {
+        console.log(ledValue);
+        ledValue = ledValue === 1 ? 0 : 1;
+      });
+    });
+};
+
+exports.CardReader = CardReader;
+exports.cardReaderViaSerialPort = cardReaderViaSerialPort;
 

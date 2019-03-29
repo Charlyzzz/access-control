@@ -1,4 +1,4 @@
-const { cardReaderViaSerialPort } = require('./cardReader')
+const { cardReaderViaSerialPort } = require('./cardReader');
 
 const nfcReader = cardReaderViaSerialPort();
 
