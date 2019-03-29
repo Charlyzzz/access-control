@@ -4,18 +4,25 @@ const SerialPort = require('serialport');
 function cardReaderViaSerialPort(port = '/dev/ttyAMA0', cfg = { baudRate: 115200, pollInterval: 3000 }, portType = SerialPort) {
   const serialPort = new SerialPort(port, cfg);
   const nfcReader = new PN532(serialPort);
-  return CardReader(nfcReader);
+  return new CardReader(nfcReader, Date);
 }
 
-function CardReader(nfcReader) {
+function CardReader(nfcReader, timer) {
   this._reader = nfcReader;
+  this.timer = timer;
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
   this._reader.on('ready', () => {
-    this._reader.scanTag().then(callback);
+    const lastEvent = null;
+    this._reader.on('tag', (tag) => {
+      const now = timer.now();
+      if (lastEvent == null || now - lastEvent > this.pollingInterval) {
+        callback(tag);
+      }
+    });
   });
 }
 
 exports.CardReader = CardReader
-exports.defaultReader = CardReader
+exports.cardReaderViaSerialPort = cardReaderViaSerialPort

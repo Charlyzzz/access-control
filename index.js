@@ -1,5 +1,5 @@
-const { defaultReader } = require('./cardReader')
+const { cardReaderViaSerialPort } = require('./cardReader')
 
-const nfcReader = defaultReader();
+const nfcReader = cardReaderViaSerialPort();
 
 nfcReader.onTag(console.log);
