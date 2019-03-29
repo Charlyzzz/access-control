@@ -41,7 +41,7 @@ CardReader.prototype.startOperationalBeacon = function startOperationalBeacon() 
     const yellow = new Led(37);
     yellow.on();
     setInterval(() => {
-      yellow.setValue(!yellow.value);
+      yellow.setValue(yellow.value === 0 ? 1 : 0);
     }, 800);
   });
 };
