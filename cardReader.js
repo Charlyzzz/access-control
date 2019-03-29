@@ -10,14 +10,18 @@ function cardReaderViaSerialPort(port = '/dev/ttyAMA0', cfg = { baudRate: 115200
 function CardReader(nfcReader, timer) {
   this._reader = nfcReader;
   this.timer = timer;
+  this.pollingInterval = 3000;
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
   this._reader.on('ready', () => {
     const lastEvent = null;
     this._reader.on('tag', (tag) => {
-      const now = timer.now();
+      const now = this.timer.now();
+      console.log("last", lastEvent);
+      console.log("now", now);
       if (lastEvent == null || now - lastEvent > this.pollingInterval) {
+        lastEvent = now;
         callback(tag);
       }
     });
