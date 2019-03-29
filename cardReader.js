@@ -1,7 +1,7 @@
 const PN532 = require('pn532').PN532;
 const SerialPort = require('serialport');
 
-function cardReaderViaSerialPort(port = '/dev/ttyAMA0', cfg = { baudRate: 115200, pollInterval: 1000 }, portType = SerialPort) {
+function cardReaderViaSerialPort(port = '/dev/ttyAMA0', cfg = { baudRate: 115200, pollInterval: 2000 }, portType = SerialPort) {
   const serialPort = new SerialPort(port, cfg);
   const nfcReader = new PN532(serialPort);
   return new CardReader(nfcReader, Date);
@@ -15,16 +15,15 @@ function CardReader(nfcReader, timer) {
 
 CardReader.prototype.onTag = function onTag(callback) {
   this._reader.on('ready', () => {
-    let lastEvent = 0;
+    let lastTagDetected = 0;
     this._reader.on('tag', (tag) => {
       const now = this.timer.now();
-      const ellapsedTime = now - lastEvent;
+      const ellapsedTime = now - lastTagDetected;
       console.log("ellapsed", ellapsedTime);
-      if (lastEvent == null || now - lastEvent > this.pollingInterval) {
+      if (now - lastTagDetected > this.pollingInterval) {
         lastEvent = now;
         callback(tag);
       }
-      lastEvent = now;
     });
   });
 }
