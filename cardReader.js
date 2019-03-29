@@ -16,13 +16,15 @@ function CardReader(nfcReader, timer, pollingInterval) {
 CardReader.prototype.onTag = function onTag(callback) {
   this._reader.on('ready', () => {
     let lastTagDetected = 0;
-    this._reader.on('tag', (tag) => {
+    let lastUID = null;
+    this._reader.on('tag', ({ uid }) => {
       const now = this.now();
       const ellapsedTime = now - lastTagDetected;
       console.log("ellapsed", ellapsedTime);
-      if (now - lastTagDetected > this.pollingInterval) {
+      if (uid != lastUID || now - lastTagDetected > this.pollingInterval) {
         lastTagDetected = now;
-        callback(tag);
+        lastUID = uid;
+        callback(uid);
       }
     });
   });
