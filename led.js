@@ -5,6 +5,7 @@ function Led(pin, _gpiop = gpiop) {
   this.pin = pin;
   this.gpiop = _gpiop;
   this.value = false;
+  this.blinker = undefined;
 }
 
 Led.prototype.on = function on() {
@@ -24,7 +25,10 @@ Led.prototype.setValue = function setValue(newValue) {
 };
 
 Led.prototype.blink = function blink(time) {
-  setInterval(() => this.setValue(!this.value), time);
+  if (this.blinker !== undefined) {
+    clearInterval(this.blinker);
+  }
+  this.blinker = setInterval(() => this.setValue(!this.value), time);
 };
 
 module.exports = Led;
