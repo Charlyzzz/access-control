@@ -4,6 +4,6 @@ const nfcReader = cardReaderViaSerialPort();
 
 nfcReader.onTag((uid) => {
   console.log('UUID: ', uid);
-  reportNewTagDetected(uid)
+  reportNewTagDetected({ uid, time: Date.now() })
     .catch(console.error);
 });
