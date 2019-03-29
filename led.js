@@ -4,15 +4,15 @@ const gpiop = gpio.promise;
 function Led(pin, _gpiop = gpiop) {
   this.pin = pin;
   this.gpiop = _gpiop;
-  this.value = 0;
+  this.value = false;
 }
 
 Led.prototype.on = function on() {
-  this.setValue(1);
+  this.setValue(true);
 };
 
 Led.prototype.off = function off() {
-  return this.setValue(0);
+  return this.setValue(false);
 };
 
 Led.prototype.isOn = function isOn() {
@@ -20,7 +20,7 @@ Led.prototype.isOn = function isOn() {
 };
 
 Led.prototype.setValue = function setValue(newValue) {
-  return this.gpiop.write(this.pin, newValue).then(() => this.setValue(true));
+  return this.gpiop.write(this.pin, newValue).then(() => this.value = newValue);
 };
 
 module.exports = Led;
