@@ -8,7 +8,7 @@ function cardReaderViaSerialPort(port = '/dev/ttyAMA0', cfg = { baudRate: 115200
 }
 
 function CardReader(nfcReader) {
-  this._reader = new PN532(serialPort);
+  this._reader = nfcReader;
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
