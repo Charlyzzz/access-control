@@ -2,4 +2,4 @@ const { cardReaderViaSerialPort } = require('./cardReader');
 
 const nfcReader = cardReaderViaSerialPort();
 
-nfcReader.onTag(console.log);
+nfcReader.onTag((uid) => console.log('UUID: ', uid));

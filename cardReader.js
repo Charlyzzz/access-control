@@ -26,7 +26,6 @@ CardReader.prototype.onTag = function onTag(callback) {
     this._reader.on('tag', ({ uid }) => {
       const now = this.now();
       const ellapsedTime = now - lastTagDetected;
-      console.log('ellapsed', ellapsedTime);
       if (uid !== lastUID || now - lastTagDetected > this.pollingInterval) {
         lastTagDetected = now;
         lastUID = uid;
