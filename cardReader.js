@@ -39,8 +39,7 @@ CardReader.prototype.onTag = function onTag(callback) {
 CardReader.prototype.startOperationalBeacon = function startOperationalBeacon() {
   gpiop.setup(YELLOW_LED, gpio.DIR_OUT).then(() => {
     const yellow = new Led(37);
-    yellow.off();
-    setInterval(() => yellow.setValue(!yellow.value), 1000);
+    yellow.blink(400);
   });
 };
 

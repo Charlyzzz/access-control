@@ -23,4 +23,8 @@ Led.prototype.setValue = function setValue(newValue) {
   return this.gpiop.write(this.pin, newValue).then(() => this.value = newValue);
 };
 
+Led.prototype.blink = function blink(time) {
+  setInterval(() => this.setValue(!this.value), time);
+};
+
 module.exports = Led;
