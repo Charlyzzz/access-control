@@ -40,9 +40,9 @@ CardReader.prototype.startOperationalBeacon = function startOperationalBeacon() 
     .then(() => {
       let ledValue = 1;
       setInterval(() => {
-        console.log(ledValue);
+        gpiop.write(PIN, ledValue);
         ledValue = ledValue === 1 ? 0 : 1;
-      });
+      }, 1000);
     });
 };
 
