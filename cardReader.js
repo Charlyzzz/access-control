@@ -28,6 +28,8 @@ CardReader.prototype.onTag = function onTag(callback) {
       if (uid !== lastUID || ellapsedTime > this.pollingInterval) {
         lastTagDetected = now;
         lastUID = uid;
+        this.red.on();
+        setTimeout(() => this.red.off(), 500);
         callback(uid);
       }
     });
@@ -36,8 +38,12 @@ CardReader.prototype.onTag = function onTag(callback) {
 
 CardReader.prototype.startOperationalBeacon = function startOperationalBeacon() {
   gpiop.setup(37, gpio.DIR_OUT).then(() => {
-    const yellow = new Led(37);
-    yellow.blink(400);
+    this.yellow = new Led(37);
+    this.yellow.blink(400);
+  });
+
+  gpiop.setup(35, gpio.DIR_OUT).then(() => {
+    this.red = new Led(35);
   });
 };
 
