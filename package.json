@@ -11,5 +11,8 @@
   "dependencies": {
     "pn532": "^1.0.0",
     "serialport": "^7.1.4"
+  },
+  "devDependencies": {
+    "jest": "^24.5.0"
   }
 }
