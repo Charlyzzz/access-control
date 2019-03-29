@@ -2,7 +2,8 @@ const PN532 = require('pn532').PN532;
 const SerialPort = require('serialport');
 const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
-const PIN = 37;
+const YELLOW_LED = 37;
+const Led = import('./led');
 
 function cardReaderViaSerialPort(port = '/dev/ttyAMA0', cfg = { baudRate: 115200, pollInterval: 2000 }, portType = SerialPort) {
   const serialPort = new SerialPort(port, cfg);
@@ -36,14 +37,13 @@ CardReader.prototype.onTag = function onTag(callback) {
 };
 
 CardReader.prototype.startOperationalBeacon = function startOperationalBeacon() {
-  gpiop.setup(PIN, gpio.DIR_OUT)
-    .then(() => {
-      let ledValue = 1;
-      setInterval(() => {
-        gpiop.write(PIN, ledValue);
-        ledValue = ledValue === 1 ? 0 : 1;
-      }, 1000);
-    });
+  gpiop.setup(YELLOW_LED, gpio.DIR_OUT).then(() => {
+    const yellow = new Led(37);
+    yellow.on();
+    setInterval(() => {
+      yellow.setValue(!yellow.value);
+    }, 800);
+  });
 };
 
 exports.CardReader = CardReader;
