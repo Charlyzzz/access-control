@@ -1,5 +1,5 @@
-const { cardReaderViaSerialPort } = require('./cardReader');
-const reportNewTagDetected = require('./reporter');
+const { cardReaderViaSerialPort } = require('./src/cardReader');
+const reportNewTagDetected = require('./src/reporter');
 const nfcReader = cardReaderViaSerialPort();
 
 nfcReader.onTag((uid) => {

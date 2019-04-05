@@ -1,4 +1,4 @@
-const { CardReader } = require('../cardReader');
+const { CardReader } = require('../src/cardReader');
 
 test('onTag waits to be ready first', () => {
   const fakeNfcReader = {}
