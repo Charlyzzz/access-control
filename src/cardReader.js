@@ -2,7 +2,6 @@ const PN532 = require('pn532').PN532;
 const SerialPort = require('serialport');
 const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
-const YELLOW_LED = 37;
 const Led = require('./led');
 
 function cardReaderViaSerialPort(port = '/dev/ttyAMA0', cfg = { baudRate: 115200, pollInterval: 2000 }, portType = SerialPort) {
@@ -15,7 +14,9 @@ function CardReader(nfcReader, timer, pollingInterval) {
   this._reader = nfcReader;
   this.now = timer;
   this.pollingInterval = pollingInterval;
-  this.startOperationalBeacon();
+  return this.configureLeds().then(() => {
+    this.yellow.blink(400);
+  })
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
@@ -35,15 +36,16 @@ CardReader.prototype.onTag = function onTag(callback) {
   });
 };
 
-CardReader.prototype.startOperationalBeacon = function startOperationalBeacon() {
-  gpiop.setup(37, gpio.DIR_OUT).then(() => {
-    this.yellow = new Led(37);
-    this.yellow.blink(400);
-  });
-
-  gpiop.setup(35, gpio.DIR_OUT).then(() => {
-    this.green = new Led(35);
-  });
+CardReader.prototype.startOperationalBeacon = function configureLeds() {
+  return Promise.all([
+    gpiop.setup(33, gpio.DIR_OUT),
+    gpiop.setup(35, gpio.DIR_OUT),
+    gpiop.setup(37, gpio.DIR_OUT)
+  ]).then(([red, yellow, green]) => {
+    this.green = new Led(green);
+    this.yellow = new Led(yellow);
+    this.red = new Led(red);
+  })
 };
 
 exports.CardReader = CardReader;
