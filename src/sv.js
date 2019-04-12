@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const requester = axios.create({
-  baseURL: '192.168.1.47:9001',
+  baseURL: 'http://192.168.1.47:9001',
   timeout: 3000
 });
 
