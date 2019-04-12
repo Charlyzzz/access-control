@@ -14,10 +14,9 @@ function CardReader(nfcReader, timer, pollingInterval) {
   this._reader = nfcReader;
   this.now = timer;
   this.pollingInterval = pollingInterval;
-  return this.configureLeds().then(() => {
-    this.yellow.blink(400);
-    return this;
-  })
+  this.configureLeds().then(() => {
+    this.yellow.blink(400)
+  });
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
@@ -38,15 +37,15 @@ CardReader.prototype.onTag = function onTag(callback) {
 };
 
 CardReader.prototype.configureLeds = function configureLeds() {
-  return Promise.all([
-    gpiop.setup(33, gpio.DIR_OUT),
-    gpiop.setup(35, gpio.DIR_OUT),
-    gpiop.setup(37, gpio.DIR_OUT)
-  ]).then(([red, yellow, green]) => {
-    this.green = new Led(green);
-    this.yellow = new Led(yellow);
-    this.red = new Led(red);
+  const pins = [33, 35, 37].map(pinNumber => {
+    gpiop.setup(pinNumber, gpio.DIR_OUT).then(() => pinNumber)
   })
+  Promise.all(pins)
+    .then(([red, yellow, green]) => {
+      this.yellow = new Led(yellow);
+      this.green = new Led(green);
+      this.red = new Led(red);
+    })
 };
 
 exports.CardReader = CardReader;
