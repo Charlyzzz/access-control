@@ -36,7 +36,7 @@ CardReader.prototype.onTag = function onTag(callback) {
   });
 };
 
-CardReader.prototype.startOperationalBeacon = function configureLeds() {
+CardReader.prototype.configureLeds = function configureLeds() {
   return Promise.all([
     gpiop.setup(33, gpio.DIR_OUT),
     gpiop.setup(35, gpio.DIR_OUT),
