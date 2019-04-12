@@ -40,7 +40,7 @@ CardReader.prototype.configureLeds = function configureLeds() {
   const pins = [33, 35, 37].map(pinNumber => {
     gpiop.setup(pinNumber, gpio.DIR_OUT).then(() => pinNumber)
   })
-  Promise.all(pins)
+  return Promise.all(pins)
     .then(([red, yellow, green]) => {
       this.yellow = new Led(yellow);
       this.green = new Led(green);
