@@ -14,7 +14,6 @@ function CardReader(nfcReader, timer, { red, yellow, green }, pollingInterval) {
   this.red = red
   this.yellow = yellow
   this.green = green
-  this.yellow.blink(400)
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
@@ -27,7 +26,6 @@ CardReader.prototype.onTag = function onTag(callback) {
       if (uid !== lastUID || ellapsedTime > this.pollingInterval) {
         lastTagDetected = now;
         lastUID = uid;
-        this.green.step(500);
         callback(uid);
       }
     });
