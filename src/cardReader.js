@@ -20,9 +20,11 @@ CardReader.prototype.onTag = function onTag(callback) {
   this.configure().then(() => {
     this.yellow.blink(400)
     this._reader.on('ready', () => {
+      console.log("ready!")
       let lastTagDetected = 0;
       let lastUID = null;
       this._reader.on('tag', ({ uid }) => {
+        console.log("tag")
         const now = this.now();
         const ellapsedTime = now - lastTagDetected;
         if (uid !== lastUID || ellapsedTime > this.pollingInterval) {
