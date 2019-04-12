@@ -13,7 +13,7 @@ configurePins().then(pins => {
     reportNewTagDetected({ uid, timestamp: Date.now() })
       .catch(console.error);
       */
-    authorize()
+    authorize({ uid })
       .then(respuestaDeAutorizacion => {
         console.log(respuestaDeAutorizacion)
         const { estaAutorizado, nombre } = respuestaDeAutorizacion
