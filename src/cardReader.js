@@ -16,6 +16,7 @@ function CardReader(nfcReader, timer, pollingInterval) {
   this.pollingInterval = pollingInterval;
   return this.configureLeds().then(() => {
     this.yellow.blink(400);
+    return this;
   })
 }
 
