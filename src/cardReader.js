@@ -17,7 +17,7 @@ function CardReader(nfcReader, timer, pollingInterval) {
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
-  this.configure(() => {
+  this.configure().then(() => {
     this.yellow.blink(400)
     this._reader.on('ready', () => {
       let lastTagDetected = 0;
