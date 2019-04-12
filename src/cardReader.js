@@ -38,10 +38,12 @@ CardReader.prototype.onTag = function onTag(callback) {
 
 CardReader.prototype.configureLeds = function configureLeds() {
   const pins = [33, 35, 37].map(pinNumber => {
-    gpiop.setup(pinNumber, gpio.DIR_OUT).then(() => pinNumber)
+    return gpiop.setup(pinNumber, gpio.DIR_OUT)
+      .then(() => pinNumber)
   })
   return Promise.all(pins)
     .then(([red, yellow, green]) => {
+      console.log(red, yellow, green)
       this.yellow = new Led(yellow);
       this.green = new Led(green);
       this.red = new Led(red);
