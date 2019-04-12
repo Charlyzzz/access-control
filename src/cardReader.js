@@ -44,7 +44,6 @@ CardReader.prototype.configureLeds = function configureLeds() {
   })
   return Promise.all(pins)
     .then(([red, yellow, green]) => {
-      console.log(red, yellow, green)
       this.yellow = new Led(yellow);
       this.green = new Led(green);
       this.red = new Led(red);
