@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const requester = axios.create({
   baseURL: process.env.REPORTER_URL,
-  timeout: 3000
+  timeout: 7000
 });
 
 function authorize(event) {
