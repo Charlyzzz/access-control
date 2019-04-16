@@ -1,6 +1,5 @@
 const { cardReaderViaSerialPort } = require('./src/cardReader');
-const reportNewTagDetected = require('./src/reporter');
-const authorize = require('./src/sv');
+const authorize = require('./src/reporter');
 const configurePins = require('./src/pinOut')
 
 configurePins().then(pins => {
@@ -9,15 +8,10 @@ configurePins().then(pins => {
 
   nfcReader.onTag((uid) => {
     console.log('UUID: ', uid);
-    /*
-    reportNewTagDetected({ uid, timestamp: Date.now() })
-      .catch(console.error);
-      */
     authorize({ uid })
       .then(respuestaDeAutorizacion => {
         console.log(respuestaDeAutorizacion)
-        const { estaAutorizado, nombre } = respuestaDeAutorizacion
-        if (estaAutorizado) {
+        if (respuestaDeAutorizacion.estaAutorizado) {
           pins.green.step(500);
         } else {
           pins.red.step(500);

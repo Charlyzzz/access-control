@@ -5,8 +5,13 @@ const requester = axios.create({
   timeout: 3000
 });
 
-function reportNewTagDetected(event) {
-  return requester.post('/Dev', event);
+function authorize(event) {
+  return requester.post('/authorize', event)
+    .catch((error) => {
+      console.error(error)
+      return Promise.reject(error)
+    })
+    .then(response => response.data);
 }
 
-module.exports = reportNewTagDetected;
+module.exports = authorize;
