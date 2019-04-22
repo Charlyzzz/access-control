@@ -11,7 +11,7 @@ configurePins().then(pins => {
     authorize({ uid })
       .then(respuestaDeAutorizacion => {
         console.log(respuestaDeAutorizacion)
-        if (respuestaDeAutorizacion.estaAutorizado) {
+        if (respuestaDeAutorizacion.authorized) {
           pins.green.step(500);
         } else {
           pins.red.step(500);
