@@ -3,7 +3,7 @@ const authorize = require('./src/reporter');
 const configurePins = require('./src/pinout')
 
 const BLINK_PERIOD = 400;
-const DOOR_DELAY = 3000;
+const DOOR_DELAY = 2000;
 
 configurePins().then(pins => {
   const nfcReader = cardReaderViaSerialPort(pins);
