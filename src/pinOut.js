@@ -1,6 +1,6 @@
 const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
-const Led = require('./led');
+const { Led, Relay } = require('./output');
 
 const configurePins = () => {
   const pins = [33, 35, 37, 12].map(pinNumber => {
@@ -13,7 +13,7 @@ const configurePins = () => {
         yellow: new Led(yellow),
         red: new Led(red),
         green: new Led(green),
-        relay: new Led(relay)
+        relay: new Relay(relay)
       }
     })
 };

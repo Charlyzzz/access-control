@@ -1,40 +1,41 @@
 const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
 
-function Led(pin, _gpiop = gpiop) {
+function Output(pin, _gpiop = gpiop) {
   this.pin = pin;
   this.gpiop = _gpiop;
   this.value = false;
   this.blinker = undefined;
 }
 
-Led.prototype.on = function on() {
+Output.prototype.on = function on() {
   this.setValue(true);
 };
 
-Led.prototype.off = function off() {
+Output.prototype.off = function off() {
   return this.setValue(false);
 };
 
-Led.prototype.isOn = function isOn() {
+Output.prototype.isOn = function isOn() {
   return this.value;
 };
 
-Led.prototype.setValue = function setValue(newValue) {
+Output.prototype.setValue = function setValue(newValue) {
   return this.gpiop.write(this.pin, newValue).then(() => this.value = newValue);
 };
 
-Led.prototype.blink = function blink(time) {
+Output.prototype.blink = function blink(time) {
   if (this.blinker !== undefined) {
     clearInterval(this.blinker);
   }
   this.blinker = setInterval(() => this.setValue(!this.value), time);
 };
 
-Led.prototype.step = function step(duration) {
+Output.prototype.step = function step(duration) {
   this.setValue(true);
   setTimeout(() => this.off(), duration);
 };
 
 
-module.exports = Led;
+module.Led = Output;
+module.Relay = Output;
