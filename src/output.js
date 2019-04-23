@@ -37,5 +37,4 @@ Output.prototype.step = function step(duration) {
 };
 
 
-module.Led = Output;
-module.Relay = Output;
+module.exports = Output;
