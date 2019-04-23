@@ -31,6 +31,13 @@ Output.prototype.blink = function blink(time) {
   this.blinker = setInterval(() => this.setValue(!this.value), time);
 };
 
+Output.prototype.stopBlinking = function stopBlinking() {
+  if (this.blinker !== undefined) {
+    clearInterval(this.blinker);
+  }
+  return this.setValue(false);
+};
+
 Output.prototype.step = function step(duration) {
   this.setValue(true);
   setTimeout(() => this.off(), duration);
