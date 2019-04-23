@@ -5,6 +5,7 @@ const configurePins = require('./src/pinOut')
 configurePins().then(pins => {
   const nfcReader = cardReaderViaSerialPort(pins);
   pins.yellow.blink(400)
+  pins.relay.blink(1000)
 
   nfcReader.onTag((uid) => {
     console.log('UUID: ', uid);
