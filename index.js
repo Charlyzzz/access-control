@@ -12,8 +12,8 @@ configurePins().then(pins => {
       .then(respuestaDeAutorizacion => {
         console.log(respuestaDeAutorizacion)
         if (respuestaDeAutorizacion.authorized) {
-          pins.green.step(500);
-          pins.relay.step(3000)
+          pins.green.step(2000)
+          pins.relay.step(2000)
         } else {
           pins.red.step(500);
         }
