@@ -40,12 +40,12 @@ Output.prototype.stopBlinking = function stopBlinking() {
 
 Output.prototype.step = function step(duration) {
   this.setValue(true);
-  const valueSet = new Promise((resolve) => { });
-  setTimeout(() => {
-    this.off();
-    resolve();
-  }, duration);
-  return valueSet;
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      this.off();
+      resolve();
+    }, duration);
+  });
 };
 
 
