@@ -7,10 +7,10 @@ const DOOR_DELAY = 3000;
 
 configurePins().then(pins => {
   const nfcReader = cardReaderViaSerialPort(pins);
-  pins.yellow.blink(BLINK_PERIOD)
 
   nfcReader.onTag((uid) => {
     console.log('UUID: ', uid);
+    pins.yellow.blink(BLINK_PERIOD)
     authorize({ uid })
       .then(respuestaDeAutorizacion => {
         console.log(respuestaDeAutorizacion)
@@ -20,9 +20,6 @@ configurePins().then(pins => {
               pins.green.step(DOOR_DELAY),
               pins.relay.step(DOOR_DELAY)
             ]
-            Promise.all(doorOpen).then(() => {
-              pins.yellow.blink(BLINK_PERIOD);
-            })
           })
         } else {
           pins.red.step(500);
