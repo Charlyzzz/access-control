@@ -14,16 +14,14 @@ configurePins().then(pins => {
     authorize({ uid })
       .then(respuestaDeAutorizacion => {
         console.log(respuestaDeAutorizacion)
-        if (respuestaDeAutorizacion.authorized) {
-          pins.yellow.stopBlinking().then(() => {
-            const doorOpen = [
-              pins.green.step(DOOR_DELAY),
-              pins.relay.step(DOOR_DELAY)
-            ]
-          })
-        } else {
-          pins.red.step(500);
-        }
+        pins.yellow.stopBlinking().then(() => {
+          if (respuestaDeAutorizacion.authorized) {
+            pins.green.step(DOOR_DELAY)
+            pins.relay.step(DOOR_DELAY)
+          } else {
+            pins.red.step(500);
+          }
+        })
       })
   })
 });
