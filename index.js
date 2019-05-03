@@ -19,7 +19,7 @@ configurePins().then(pins => {
             pins.green.step(DOOR_DELAY)
             pins.relay.step(DOOR_DELAY)
           } else {
-            pins.red.step(500);
+            pins.red.step(800);
           }
         })
       })
