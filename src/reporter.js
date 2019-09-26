@@ -1,4 +1,6 @@
-import logger from 'logger';
+const logger = require('./logger');
+
+const { CardReader } = require('../src/cardReader');
 
 const axios = require('axios');
 

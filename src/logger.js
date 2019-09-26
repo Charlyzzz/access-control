@@ -1,4 +1,4 @@
-import * as winston from 'winston';
+const winston = require('winston');
 
 const logger = winston.createLogger({
   transports: [
@@ -6,4 +6,4 @@ const logger = winston.createLogger({
   ]
 });
 
-export default logger;
+module.exports = logger;

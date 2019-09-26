@@ -1,4 +1,4 @@
-import logger from './src/logger';
+const logger = require('./src/logger');
 
 const { cardReaderViaSerialPort } = require('./src/cardReader');
 const authorize = require('./src/reporter');
