@@ -11,9 +11,9 @@ function CardReader(nfcReader, timer, { red, yellow, green }, pollingInterval) {
   this._reader = nfcReader;
   this.now = timer;
   this.pollingInterval = pollingInterval;
-  this.red = red
-  this.yellow = yellow
-  this.green = green
+  this.red = red;
+  this.yellow = yellow;
+  this.green = green;
 }
 
 CardReader.prototype.onTag = function onTag(callback) {

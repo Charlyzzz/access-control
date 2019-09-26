@@ -1,3 +1,5 @@
+import logger from 'logger';
+
 const axios = require('axios');
 
 const requester = axios.create({
@@ -8,8 +10,8 @@ const requester = axios.create({
 function authorize(event) {
   return requester.post('/authorize', event)
     .catch((error) => {
-      console.error(error)
-      return Promise.reject(error)
+      logger.error(error);
+      return Promise.reject(error);
     })
     .then(response => response.data);
 }
