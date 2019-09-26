@@ -15,7 +15,7 @@ configurePins()
     const nfcReader = cardReaderViaSerialPort(pins);
 
     nfcReader.onTag((uid) => {
-      logger.info('UUID: ', uid);
+      logger.info({ UUID: uid });
       pins.yellow.blink(BLINK_PERIOD);
       authorize({ uid })
         .then(respuestaDeAutorizacion => {
