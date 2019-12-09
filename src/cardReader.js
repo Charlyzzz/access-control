@@ -2,7 +2,7 @@ const PN532 = require('pn532').PN532;
 const SerialPort = require('serialport');
 const logger = require('./logger');
 
-function cardReaderViaSerialPort(pins, port = '/dev/ttyS0', cfg = { baudRate: 115200, pollInterval: 2000 }, portType = SerialPort) {
+function cardReaderViaSerialPort(pins, port = '/dev/ttyAMA0', cfg = { baudRate: 115200, pollInterval: 2000 }, portType = SerialPort) {
   const serialPort = new SerialPort(port, cfg);
   const nfcReader = new PN532(serialPort);
   return new CardReader(nfcReader, Date.now, pins, 3000);
