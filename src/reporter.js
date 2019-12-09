@@ -1,7 +1,4 @@
 const logger = require('./logger');
-
-const { CardReader } = require('../src/cardReader');
-
 const axios = require('axios');
 
 const requester = axios.create({
