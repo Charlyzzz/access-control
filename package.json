@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "nfc": "^0.3.3",
     "pn532": "^1.0.0",
     "rpi-gpio": "^2.1.5",
