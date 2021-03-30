@@ -10,9 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.1",
+    "nfc": "^0.3.3",
     "pn532": "^1.0.0",
     "rpi-gpio": "^2.1.5",
-    "serialport": "^7.1.5",
     "winston": "^3.2.1"
   },
   "devDependencies": {

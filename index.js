@@ -28,10 +28,12 @@ configurePins()
               pins.red.step(800);
             }
           });
+        }).catch((error) => {
+          logger.error(error);
         });
     });
   })
   .catch(error => {
-    logger.error(e);
+    logger.error(error);
     process.exit(1);
   });

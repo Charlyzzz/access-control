@@ -1,10 +1,8 @@
-const PN532 = require('pn532').PN532;
-const SerialPort = require('serialport');
+const { nfc } = require('nfc');
 const logger = require('./logger');
 
-function cardReaderViaSerialPort(pins, port = '/dev/ttyAMA0', cfg = { baudRate: 115200, pollInterval: 2000 }, portType = SerialPort) {
-  const serialPort = new SerialPort(port, cfg);
-  const nfcReader = new PN532(serialPort);
+function cardReaderViaSerialPort(pins) {
+  const nfcReader = new nfc.NFC();;
   return new CardReader(nfcReader, Date.now, pins, 3000);
 }
 
@@ -18,11 +16,11 @@ function CardReader(nfcReader, timer, { red, yellow, green }, pollingInterval) {
 }
 
 CardReader.prototype.onTag = function onTag(callback) {
-  this._reader.on('ready', () => {
-    logger.debug('card reader ready');
-    let lastTagDetected = 0;
-    let lastUID = null;
-    this._reader.on('tag', ({ uid }) => {
+  logger.debug('card reader ready');
+  let lastTagDetected = 0;
+  let lastUID = null;
+  this._reader.on('read', ({ uid }) => {
+    if (uid) {
       logger.debug('tag detected');
       const now = this.now();
       const ellapsedTime = now - lastTagDetected;
@@ -31,8 +29,18 @@ CardReader.prototype.onTag = function onTag(callback) {
         lastUID = uid;
         callback(uid);
       }
-    });
-  });
+    } else {
+      this._reader.stop();
+    }
+  }).on('error', (err) => {
+    console.trace(1)
+    logger.error(err)
+    process.exit(1);
+  }).on('stopped', (err) => {
+    console.trace(2)
+    logger.error(err)
+    process.exit(1);
+  }).start();
 };
 
 exports.CardReader = CardReader;

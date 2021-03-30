@@ -3,7 +3,7 @@ const gpiop = gpio.promise;
 const Output = require('./output');
 
 const configurePins = () => {
-  const pins = [33, 35, 37, 12].map(pinNumber => {
+  const pins = [33, 35, 37, 11].map(pinNumber => {
     return gpiop.setup(pinNumber, gpio.DIR_OUT)
       .then(() => pinNumber);
   });
